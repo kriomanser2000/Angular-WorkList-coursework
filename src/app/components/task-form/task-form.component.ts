@@ -1,12 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-form',
-  standalone: true,
-  imports: [],
-  templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.css'
+  templateUrl: './task-form.component.html'
 })
-export class TaskFormComponent {
-
+export class TaskFormComponent
+{
+  newTask: Task = {
+    id: '',
+    title: '',
+    description: '',
+    tags: [],
+    priority: 'Medium',
+    dueDate: new Date(),
+    projectId: ''
+  };
+  @Output() taskAdded = new EventEmitter<Task>();
+  addTask()
+  {
+    this.newTask.id = Math.random().toString(36).substring(2);
+    this.taskAdded.emit(this.newTask);
+    this.newTask = { 
+      id: '',
+      title: '',
+      description: '',
+      tags: [],
+      priority: 'Medium',
+      dueDate: new Date() 
+    };
+  }
 }
